@@ -6,10 +6,10 @@ class Vector(private val body: IntArray) {
         return body[index]
     }
 
-    companion object {
-        fun plus(v1: Vector, v2: Vector): Vector {
-            val newBody = Array(v1.body.size) { i -> v1.body[i] + v2.body[i] }.toIntArray()
-            return Vector(newBody)
-        }
+
+    fun plus(vector: Vector): Vector {
+        val newBody = Array(this.body.size) { i -> this.body[i] + vector.body[i] }.toIntArray()
+        return Vector(newBody)
     }
+
 }
