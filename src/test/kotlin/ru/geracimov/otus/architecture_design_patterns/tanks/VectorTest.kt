@@ -1,9 +1,7 @@
 package ru.geracimov.otus.architecture_design_patterns.tanks
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
-import ru.geracimov.otus.architecture_design_patterns.tanks.ru.geracimov.otus.architecture_design_patterns.tanks.Vector
 
 internal class VectorTest {
 

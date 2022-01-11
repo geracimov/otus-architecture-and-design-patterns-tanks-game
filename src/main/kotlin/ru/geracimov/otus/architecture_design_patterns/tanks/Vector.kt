@@ -1,4 +1,4 @@
-package ru.geracimov.otus.architecture_design_patterns.tanks.ru.geracimov.otus.architecture_design_patterns.tanks
+package ru.geracimov.otus.architecture_design_patterns.tanks
 
 class Vector(private val body: IntArray) {
 
