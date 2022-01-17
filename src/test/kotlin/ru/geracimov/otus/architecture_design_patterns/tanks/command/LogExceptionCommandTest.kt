@@ -9,11 +9,12 @@ import java.io.PrintStream
 import kotlin.test.assertTrue
 
 internal class LogExceptionCommandTest {
-    private lateinit var logExceptionCommand: LogExceptionCommand
+    private lateinit var logExceptionCommand: Command
+    private lateinit var mockCommand: Command
 
     @BeforeEach
     internal fun setUp() {
-        val mockCommand = mock<Command> {
+        mockCommand = mock {
             on { toString() } doReturn "MockCommand"
         }
         logExceptionCommand = LogExceptionCommand(mockCommand, IllegalStateException("SomeException"))
