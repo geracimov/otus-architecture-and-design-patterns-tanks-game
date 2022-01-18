@@ -10,9 +10,10 @@ import ru.geracimov.otus.architecture_design_patterns.tanks.adapter.Movable
 import ru.geracimov.otus.architecture_design_patterns.tanks.command.Command
 import ru.geracimov.otus.architecture_design_patterns.tanks.command.MoveCommand
 import ru.geracimov.otus.architecture_design_patterns.tanks.command.RepeatCommand
+import ru.geracimov.otus.architecture_design_patterns.tanks.command.TwiceRepeatCommand
 import java.util.*
 
-internal class RepeatThenLogExceptionHandlerTest {
+internal class TwiceRepeatThenLogExceptionHandlerTest {
     private val queue: Queue<Command> = LinkedList()
     private lateinit var mainExceptionHandler: ExceptionHandler
 
@@ -25,7 +26,10 @@ internal class RepeatThenLogExceptionHandlerTest {
         handlers[moveIse] = RepeatExceptionHandler(queue)
 
         val repeatIse = mainExceptionHandler.hashCodeOf(RepeatCommand::class, IllegalStateException::class)
-        handlers[repeatIse] = LogExceptionHandler(queue)
+        handlers[repeatIse] = TwiceRepeatExceptionHandler(queue)
+
+        val twiceRepeatIse = mainExceptionHandler.hashCodeOf(TwiceRepeatCommand::class, IllegalStateException::class)
+        handlers[twiceRepeatIse] = LogExceptionHandler(queue)
     }
 
     @Test
@@ -45,6 +49,6 @@ internal class RepeatThenLogExceptionHandlerTest {
             }
         }
 
-        verify(mockMovable, times(2)).getPosition()
+        verify(mockMovable, times(3)).getPosition()
     }
 }
