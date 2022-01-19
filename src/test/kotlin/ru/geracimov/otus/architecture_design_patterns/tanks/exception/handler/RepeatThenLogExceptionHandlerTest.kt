@@ -2,11 +2,7 @@ package ru.geracimov.otus.architecture_design_patterns.tanks.exception.handler
 
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.doThrow
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.times
-import org.mockito.kotlin.verify
-import ru.geracimov.otus.architecture_design_patterns.tanks.adapter.Movable
+import org.mockito.kotlin.*
 import ru.geracimov.otus.architecture_design_patterns.tanks.command.Command
 import ru.geracimov.otus.architecture_design_patterns.tanks.command.MoveCommand
 import ru.geracimov.otus.architecture_design_patterns.tanks.command.RepeatCommand
@@ -15,13 +11,17 @@ import java.util.*
 internal class RepeatThenLogExceptionHandlerTest {
     private val queue: Queue<Command> = LinkedList()
     private lateinit var mainExceptionHandler: ExceptionHandler
+    private lateinit var mockMoveCommand: MoveCommand
 
     @BeforeEach
     internal fun setUp() {
         val handlers = HashMap<Int, ExceptionHandler>()
         mainExceptionHandler = MainExceptionHandler(handlers)
-
-        val moveIse = mainExceptionHandler.hashCodeOf(MoveCommand::class, IllegalStateException::class)
+        mockMoveCommand = mock {
+            on { execute() } doThrow IllegalStateException("SomeException")
+            on { toString() } doReturn "MockMoveCommand"
+        }
+        val moveIse = mainExceptionHandler.hashCodeOf(mockMoveCommand::class, IllegalStateException::class)
         handlers[moveIse] = RepeatExceptionHandler(queue)
 
         val repeatIse = mainExceptionHandler.hashCodeOf(RepeatCommand::class, IllegalStateException::class)
@@ -30,11 +30,7 @@ internal class RepeatThenLogExceptionHandlerTest {
 
     @Test
     fun moveCommandWillRepeatedThenLoggedToConsoleTest() {
-        val mockMovable = mock<Movable> {
-            on { getPosition() } doThrow IllegalStateException("SomeException")
-        }
-
-        queue.offer(MoveCommand(mockMovable))
+        queue.offer(mockMoveCommand)
 
         while (queue.isNotEmpty()) {
             val command = queue.poll()
@@ -45,6 +41,6 @@ internal class RepeatThenLogExceptionHandlerTest {
             }
         }
 
-        verify(mockMovable, times(2)).getPosition()
+        verify(mockMoveCommand, times(2)).execute()
     }
 }

@@ -2,10 +2,10 @@ package ru.geracimov.otus.architecture_design_patterns.tanks.command
 
 import java.lang.System.getLogger
 
-class LogExceptionCommand(
+open class LogExceptionCommand(
     private val command: Command,
     private val exception: Exception
-) : Command {
+) : AbstractCommand() {
 
     override fun execute() {
         loggerWithExplicitClass.log(System.Logger.Level.INFO, "Command $command threw exception: ${exception.message}")

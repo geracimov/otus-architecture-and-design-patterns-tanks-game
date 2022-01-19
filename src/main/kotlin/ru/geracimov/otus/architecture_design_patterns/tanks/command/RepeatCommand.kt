@@ -1,6 +1,6 @@
 package ru.geracimov.otus.architecture_design_patterns.tanks.command
 
-class RepeatCommand(private val repeatableCommand: Command) : Command {
+open class RepeatCommand(private val repeatableCommand: Command) : AbstractCommand() {
 
     override fun execute() {
         repeatableCommand.execute()
