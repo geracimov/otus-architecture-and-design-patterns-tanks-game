@@ -5,7 +5,7 @@ plugins {
     application
 }
 
-group = "ru.geracimov.otus.architecture_design_patterns"
+group = "ru.geracimov.otus.architecture_design_patterns.tanks"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -21,9 +21,5 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "16"
-}
-
-application {
-    mainClass.set("MainKt")
+    kotlinOptions.jvmTarget = "11"
 }
