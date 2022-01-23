@@ -24,4 +24,16 @@ internal class VectorTest {
         assertEquals(10, result.dimensionByIndex(2))
     }
 
+    @Test
+    internal fun toStringTest() {
+        val v1 = Vector(intArrayOf(1, 2))
+        assertEquals(v1.toString(), "[1, 2]")
+    }
+
+    @Test
+    internal fun hashCodeTest() {
+        val v1 = Vector(intArrayOf(1, 2))
+        assertEquals(v1.hashCode(), intArrayOf(1, 2).contentHashCode())
+    }
+
 }
