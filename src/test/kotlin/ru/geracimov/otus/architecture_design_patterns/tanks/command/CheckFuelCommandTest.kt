@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import ru.geracimov.otus.architecture_design_patterns.tanks.adapter.FuelCheckable
 import ru.geracimov.otus.architecture_design_patterns.tanks.exception.CommandException
@@ -18,20 +17,22 @@ internal class CheckFuelCommandTest {
     @BeforeEach
     internal fun setUp() {
         mockFuelCheckable = mock {
-            //так и не нашел как можно сделать условие не на равенство, а на условие <=
-            on(it.isFuelEnough(eq(5))) doReturn true
+            on(it.isFuelEnough()) doReturn true
         }
     }
 
     @Test
     fun executeSuccessTest() {
-        checkFuelCommand = CheckFuelCommand(mockFuelCheckable, 5)
+        checkFuelCommand = CheckFuelCommand(mockFuelCheckable)
         assertDoesNotThrow { checkFuelCommand.execute() }
     }
 
     @Test
     fun executeFailTest() {
-        checkFuelCommand = CheckFuelCommand(mockFuelCheckable, 8)
+        mockFuelCheckable = mock {
+            on(it.isFuelEnough()) doReturn false
+        }
+        checkFuelCommand = CheckFuelCommand(mockFuelCheckable)
         assertFailsWith<CommandException>(block = { checkFuelCommand.execute() })
     }
 

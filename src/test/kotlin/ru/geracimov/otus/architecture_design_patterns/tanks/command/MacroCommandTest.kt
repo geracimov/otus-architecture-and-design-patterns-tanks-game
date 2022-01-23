@@ -26,7 +26,7 @@ internal class MacroCommandTest {
 
     @Test
     fun execute() {
-        val macroCommand = MacroCommand(listOf(someCommand1, someCommand2, someCommand3))
+        val macroCommand = MacroCommand(arrayOf(someCommand1, someCommand2, someCommand3))
         assertFailsWith<CommandException>(block = { macroCommand.execute() })
         verify(someCommand1).execute()
         verify(someCommand2).execute()

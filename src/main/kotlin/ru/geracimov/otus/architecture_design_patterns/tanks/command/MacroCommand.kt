@@ -2,7 +2,7 @@ package ru.geracimov.otus.architecture_design_patterns.tanks.command
 
 import ru.geracimov.otus.architecture_design_patterns.tanks.exception.CommandException
 
-open class MacroCommand(private val commands: List<Command>) : AbstractCommand() {
+open class MacroCommand(private val commands: Array<Command>) : AbstractCommand() {
 
     override fun execute() {
         try {
