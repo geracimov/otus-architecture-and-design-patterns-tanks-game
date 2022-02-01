@@ -6,18 +6,17 @@ import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import ru.geracimov.otus.architecture_design_patterns.tanks.command.Command
 import ru.geracimov.otus.architecture_design_patterns.tanks.command.LogExceptionCommand
-import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 internal class LogExceptionHandlerTest {
-    private lateinit var queue: Queue<Command>
+    private lateinit var queue: ArrayDeque<Command>
     private lateinit var logExceptionHandler: ExceptionHandler
     private lateinit var logExceptionCommand: Command
 
     @BeforeEach
     internal fun setUp() {
-        queue = LinkedList()
+        queue = ArrayDeque()
         logExceptionHandler = LogExceptionHandler(queue)
         val mockCommand = mock<Command> {
             on { toString() } doReturn "MockCommand"
@@ -30,7 +29,7 @@ internal class LogExceptionHandlerTest {
     fun logExceptionHandlerHandleTest() {
         logExceptionHandler.handle(logExceptionCommand, IllegalStateException())
         assertEquals(1, queue.size)
-        val commandInQueue = queue.poll()
+        val commandInQueue = queue.removeFirst()
         assertTrue(commandInQueue is LogExceptionCommand)
     }
 }

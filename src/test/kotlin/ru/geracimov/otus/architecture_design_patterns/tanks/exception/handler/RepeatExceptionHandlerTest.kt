@@ -6,19 +6,18 @@ import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import ru.geracimov.otus.architecture_design_patterns.tanks.command.Command
 import ru.geracimov.otus.architecture_design_patterns.tanks.command.RepeatCommand
-import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 internal class RepeatExceptionHandlerTest {
-    private lateinit var queue: Queue<Command>
+    private lateinit var queue: ArrayDeque<Command>
     private lateinit var repeatExceptionHandler: ExceptionHandler
     private lateinit var repeatCommand: Command
     private lateinit var mockCommand: Command
 
     @BeforeEach
     internal fun setUp() {
-        queue = LinkedList()
+        queue = ArrayDeque()
         repeatExceptionHandler = RepeatExceptionHandler(queue)
         mockCommand = mock {
             on { toString() } doReturn "MockCommand"
@@ -30,7 +29,7 @@ internal class RepeatExceptionHandlerTest {
     fun handle() {
         repeatExceptionHandler.handle(repeatCommand, IllegalStateException())
         assertEquals(1, queue.size)
-        val commandInQueue = queue.poll()
+        val commandInQueue = queue.removeFirst()
         assertTrue(commandInQueue is RepeatCommand)
     }
 }
