@@ -1,6 +1,7 @@
 package ru.geracimov.otus.architecture_design_patterns.tanks
 
-class UObjectImpl(private val properties: MutableMap<String, Any>) : UObject {
+@Suppress("UNCHECKED_CAST")
+class UObjectImpl(private val properties: MutableMap<String, Any> = mutableMapOf()) : UObject {
 
     override fun <T> getProperty(key: String): T {
         return properties[key] as T
