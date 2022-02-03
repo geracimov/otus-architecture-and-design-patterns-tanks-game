@@ -7,7 +7,6 @@ import ru.geracimov.otus.architecture_design_patterns.tanks.adapter.Movable
 import ru.geracimov.otus.architecture_design_patterns.tanks.command.Command
 import ru.geracimov.otus.architecture_design_patterns.tanks.command.MoveCommand
 import ru.geracimov.otus.architecture_design_patterns.tanks.command.RepeatCommand
-import java.util.*
 
 internal class MainExceptionHandlerTest {
     private lateinit var mainExceptionHandler: ExceptionHandler

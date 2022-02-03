@@ -4,10 +4,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
 import ru.geracimov.otus.architecture_design_patterns.tanks.command.*
-import java.util.*
 
 internal class TwiceRepeatThenLogExceptionHandlerTest {
-    private val queue: Queue<Command> = LinkedList()
+    private val queue: ArrayDeque<Command> = ArrayDeque()
     private lateinit var mainExceptionHandler: ExceptionHandler
     private lateinit var mockRotateCommand: RotateCommand
 
@@ -32,10 +31,10 @@ internal class TwiceRepeatThenLogExceptionHandlerTest {
 
     @Test
     fun moveCommandWillRepeatedThenLoggedToConsoleTest() {
-        queue.offer(mockRotateCommand)
+        queue.addLast(mockRotateCommand)
 
         while (queue.isNotEmpty()) {
-            val command = queue.poll()
+            val command = queue.removeFirst()
             try {
                 command.execute()
             } catch (e: Exception) {

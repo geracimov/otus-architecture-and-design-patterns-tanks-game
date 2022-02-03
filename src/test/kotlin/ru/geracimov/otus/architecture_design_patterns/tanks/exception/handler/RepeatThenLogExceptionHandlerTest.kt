@@ -6,10 +6,9 @@ import org.mockito.kotlin.*
 import ru.geracimov.otus.architecture_design_patterns.tanks.command.Command
 import ru.geracimov.otus.architecture_design_patterns.tanks.command.MoveCommand
 import ru.geracimov.otus.architecture_design_patterns.tanks.command.RepeatCommand
-import java.util.*
 
 internal class RepeatThenLogExceptionHandlerTest {
-    private val queue: Queue<Command> = LinkedList()
+    private val queue: ArrayDeque<Command> = ArrayDeque()
     private lateinit var mainExceptionHandler: ExceptionHandler
     private lateinit var mockMoveCommand: MoveCommand
 
@@ -30,10 +29,10 @@ internal class RepeatThenLogExceptionHandlerTest {
 
     @Test
     fun moveCommandWillRepeatedThenLoggedToConsoleTest() {
-        queue.offer(mockMoveCommand)
+        queue.addLast(mockMoveCommand)
 
         while (queue.isNotEmpty()) {
-            val command = queue.poll()
+            val command = queue.removeFirst()
             try {
                 command.execute()
             } catch (e: Exception) {
